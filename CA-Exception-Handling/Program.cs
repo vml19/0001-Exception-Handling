@@ -6,7 +6,11 @@
 
 //**** 1. Re-Throwing an Exception
 var reThrowException = new ReThrowException();
-reThrowException.Caller();
+ReThrowException.Caller();
+
+//**** 1. Throw Custom exceptions
+// var customException = new CustomException();
+// CustomException.Caller();
 
 
 

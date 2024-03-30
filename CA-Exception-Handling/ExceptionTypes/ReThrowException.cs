@@ -1,20 +1,22 @@
+using System.Runtime.ExceptionServices;
+
 namespace CA_Exception_Handling.ExceptionTypes;
 
 public class ReThrowException
 {
-    public void Caller()
+    public static void Caller()
     {
         try
         {
             Method1();
         }
-        catch (Exception ex)
+        catch (Exception e)
         {
-            Console.WriteLine(ex.StackTrace);
+            Console.WriteLine(e);
         }
     }
     
-    private void Method1()
+    private static void Method1()
     {
         try
         {
@@ -23,23 +25,17 @@ public class ReThrowException
         catch (Exception e)
         {
             //Best practise is to catch the exception and re-throw it.
-            Console.WriteLine(e);
+            //Console.WriteLine(e);
+            
+            //Capture an exception and re-throw it without changing the stack-trace
+            ExceptionDispatchInfo.Capture(e.InnerException ?? e).Throw();
             throw;
         }
     }
 
-    private void Method2()
+    private static void Method2()
     {
-        try
-        {
-            string str = null;
-            Console.WriteLine(str[0]);
-        }
-        catch (Exception e)
-        {
-            //Best practise is to catch the exception and re-throw it.
-            Console.WriteLine(e);
-            throw;
-        }
+        string str = null;
+        Console.WriteLine(str[0]);
     }
 }
